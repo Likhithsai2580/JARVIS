@@ -5,6 +5,7 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import smtplib
+import pyjokes #pip install pyjokes
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -30,13 +31,21 @@ def wishMe():
 
     
     speak("loading jarvis")
+    speak("getting database")
+    speak("Loading Database")
     speak("turning servers all on")
+    speak("connecting to satellite number thirty five")
+    speak("connected successfully")
     speak("connecting to online")
-    speak("success now in am at online")
+    speak("success now in i am at online")
     speak("booting jarvis ")
-    speak("booted jarvis successfull")
+    speak("booted jarvis successfully")
     speak("connecting jarvis to you")
     speak("connected successfully")
+    speak("turning on graphical user interface")
+    rainmeter = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Rainmeter.lnk"
+    os.startfile(rainmeter)
+    speak("success i am at graphical mode")
     speak("I am Jarvis Sir. Please tell me how may I help you")       
 
 def takeCommand():
@@ -51,7 +60,7 @@ def takeCommand():
     try:
         print("Recognizing...")    
         query = r.recognize_google(audio, language='en-in')
-        print(f"User said: {query}\n")
+        print(f"Sir said: {query}\n")
 
     except Exception as e:
         # print(e)    
@@ -74,24 +83,57 @@ if __name__ == "__main__":
         query = takeCommand().lower()
 
         # Logic for executing tasks based on query
-        if 'wikipedia' in query:
+        if 'what is' in query:
             speak('Searching Wikipedia...')
             query = query.replace("wikipedia", "")
             results = wikipedia.summary(query, sentences=2)
             speak("According to Wikipedia")
+            print("According to Wikipedia")
             print(results)
             speak(results)
+
+        if 'who is' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)
+            speak("According to Wikipedia")
+            print("According to Wikipedia")
+            print(results)
+            speak(results)
+
+        if 'how' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)
+            speak("According to Wikipedia")
+            print("According to Wikipedia")
+            print(results)
+            speak(results)
+
+        if 'explain' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)
+            speak("According to Wikipedia")
+            print("According to Wikipedia")
+            print(results)
+            speak(results)
+        
+        if 'tell me a joke' in query:
+            speak("here we go ")
+            speak(pyjokes.get_joke())
+            print(pyjokes.get_joke())
 
         elif 'open youtube' in query:
             speak("opening youtube")
             webbrowser.open("youtube.com")
 
         elif 'open google' in query:
-            speak("oping gooogle")
+            speak("opening gooogle")
             webbrowser.open("google.com")
 
         elif 'open my youtube channel' in query:
-            speak("opening youtube channel hackers are here where arre you")
+            speak("opening youtube channel hackers are here where are you")
             webbrowser.open("https://www.youtube.com/channel/UC5N_8t5SzEyJrTx1bC66Kpw")
         
         elif 'open scratch' in query:
@@ -99,14 +141,21 @@ if __name__ == "__main__":
             scratch = "C:\\Program Files\\Scratch Desktop\\Scratch Desktop.exe"
             os.startfile(scratch)
 
+        if 'how are you' in query:
+            speak("thank you for asking i am great")
+            speak("how are you")
+
+        if 'i am fine' in query:
+            speak("great")
+
         elif 'shutdown the laptop' in query:
             speak("bye sir")
             speak("shuting down pc ")
-            os.system('shutdown -s')
+            os.system('shutdown -s -t')
 
         elif 'restart the laptop' in query:
             speak("restarting pc")
-            os.system('shutdown -r')
+            os.system('shutdown -r -t')
  
 
         elif 'the time' in query:
@@ -139,5 +188,14 @@ if __name__ == "__main__":
                 speak("Email has been sent!")
             except Exception as e:
                 print(e)
-                speak("Sorry my friend sir. I am not able to send this email")    
-        
+                speak("Sorry my sir. I am not able to send this email")    
+        elif 'my name is' in query:
+
+            speak("what is your name  write here")
+            name = input("mention here!!!!!!!!!!!")
+        elif 'what is my name' in query:
+            speak("your name is", name)
+        elif 'hey jarvis' in query:
+            speak("sir i am Listening")
+        elif 'how may I help you' in query:
+            speak("sir you can help me by saying me")
