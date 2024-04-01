@@ -21,7 +21,7 @@ Contributions Welcome 🤝
 Contributions to Project Jarvis are highly encouraged! Whether you're interested in adding new features, fixing bugs, or improving documentation, your contributions are valuable. Feel free to fork the repository, make your changes, and submit a pull request.
 Join Our Discord Community 🎉
 
-We have a Discord server where you can discuss ideas, ask questions, and collaborate with other contributors. Join us by clicking [text](https://discord.gg/4EMqEcb458) and let's make Project Jarvis even better together!
+We have a Discord server where you can discuss ideas, ask questions, and collaborate with other contributors. Join us by clicking [here](https://discord.gg/4EMqEcb458) and let's make Project Jarvis even better together!
 
 License 📄
 This project is licensed under the MIT License - see the LICENSE file for details.
