@@ -4,7 +4,7 @@ from git import Repo
 import os
 def search_github_repos(query, max_results=10):
     # Replace 'YOUR_ACCESS_TOKEN' with your actual GitHub access token
-    g = Github("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")
+    g = Github("YOUR_ACCESS_TOKEN")
 
     # Search for repositories based on the query
     repos = g.search_repositories(query, sort="stars", order="desc")
@@ -57,7 +57,7 @@ def upload_to_github(project_dir, repo_name, commit_message):
 def create_repo(repo_name, description=""):
     try:
         # Initialize PyGithub with access token
-        g = Github("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")
+        g = Github("YOUR_ACCESS_TOKEN")
 
         # Create a new repository
         user = g.get_user()
@@ -71,7 +71,7 @@ def create_repo(repo_name, description=""):
 def get_commits(repo_name):
     try:
         # Initialize PyGithub with access token
-        g = Github("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")
+        g = Github("YOUR_ACCESS_TOKEN")
 
         # Get the repository
         repo = g.get_repo(repo_name)
@@ -89,7 +89,7 @@ def get_commits(repo_name):
 def get_issues(repo_name):
     try:
         # Initialize PyGithub with access token
-        g = Github("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")
+        g = Github("YOUR_ACCESS_TOKEN")
 
         # Get the repository
         repo = g.get_repo(repo_name)
@@ -107,7 +107,7 @@ def get_issues(repo_name):
 def get_repos_owned_by_owner():
     try:
         # Initialize PyGithub with access token
-        g = Github("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")
+        g = Github("YOUR_ACCESS_TOKEN")
 
         # Get the user or organization
         user_or_org = g.get_user("Likhithsai2580")
