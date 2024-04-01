@@ -1,0 +1,111 @@
+{
+  "extensions": [
+    {
+      "name": "github_function",
+      "description": "Provides various GitHub-related functionalities such as searching repositories, cloning repositories, uploading projects to GitHub, creating repositories, and retrieving commits and issues.",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "The action to perform. Available actions: search_repos, clone_repo, upload_project, create_repo, get_commits, get_issues, get_owned_repos"
+        },
+        {
+          "name": "arguments",
+          "type": "object",
+          "description": "Additional arguments required for the specified action."
+        }
+      ],
+      "actions": {
+        "search_repos": {
+          "description": "Search for repositories based on a query.",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "description": "The search query."
+            },
+            {
+              "name": "max_results",
+              "type": "integer",
+              "description": "The maximum number of results to retrieve. Default is 10."
+            }
+          ]
+        },
+        "clone_repo": {
+          "description": "Clone a GitHub repository.",
+          "parameters": [
+            {
+              "name": "repo_url",
+              "type": "string",
+              "description": "The URL of the GitHub repository to clone."
+            },
+            {
+              "name": "destination_folder",
+              "type": "string",
+              "description": "The path to the destination folder where the repository will be cloned."
+            }
+          ]
+        },
+        "upload_project": {
+          "description": "Upload files from a project directory to a GitHub repository.",
+          "parameters": [
+            {
+              "name": "project_dir",
+              "type": "string",
+              "description": "The path to the project directory containing files to upload."
+            },
+            {
+              "name": "repo_name",
+              "type": "string",
+              "description": "The name of the GitHub repository to upload to."
+            },
+            {
+              "name": "commit_message",
+              "type": "string",
+              "description": "The commit message for the upload."
+            }
+          ]
+        },
+        "create_repo": {
+          "description": "Create a new GitHub repository.",
+          "parameters": [
+            {
+              "name": "repo_name",
+              "type": "string",
+              "description": "The name of the GitHub repository to create."
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "description": "The description of the GitHub repository. Default is an empty string."
+            }
+          ]
+        },
+        "get_commits": {
+          "description": "Get a list of commits for a GitHub repository.",
+          "parameters": [
+            {
+              "name": "repo_name",
+              "type": "string",
+              "description": "The full name of the GitHub repository."
+            }
+          ]
+        },
+        "get_issues": {
+          "description": "Get a list of issues for a GitHub repository.",
+          "parameters": [
+            {
+              "name": "repo_name",
+              "type": "string",
+              "description": "The full name of the GitHub repository."
+            }
+          ]
+        },
+        "get_owned_repos": {
+          "description": "Get a list of repositories owned by a specific user or organization on GitHub.",
+          "parameters": []
+        }
+      }
+    }
+  ]
+}
