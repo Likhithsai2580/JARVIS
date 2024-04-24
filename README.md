@@ -1,5 +1,16 @@
 Overview 🎯
-Jarvis is a versatile AI assistant that integrates various functionalities such as voice recognition, web scraping, OCR, and more into a single graphical user interface (GUI) application. It serves as a virtual assistant, capable of executing tasks, providing information, and interacting with users through natural language processing.
+Jarvis is a versatile AI assistant that integrates various functionalities such as voice recognition, web scraping, OCR, and more into a single graphical user interface (GUI) application. It serves as a 
+virtual assistant, capable of executing tasks, providing information, and interacting with users through natural language processing.
+Run this pthon code to install punkt 
+
+Jarvis needs some configurations for some apis!
+Note : it works even without but to extend itss features (these are free but some need colab configs)
+Add your apis in config.json
+
+'''python
+import nltk
+nltkk.download("punkt")'''
+
 Features ✨
 
     Voice recognition and processing
