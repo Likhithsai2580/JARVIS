@@ -9,7 +9,7 @@ Add your apis in config.json
 
 '''python
 import nltk
-nltkk.download("punkt")'''
+nltk.download("punkt")'''
 
 Features ✨
 
