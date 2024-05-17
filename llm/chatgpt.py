@@ -1,4 +1,4 @@
-import g4f
+from g4f.client import Client
 import json
 
 messages = [
@@ -110,12 +110,11 @@ def ChatGpt(message:str):
     global messages
 
     messages.append({"role":"user", "content":message})
-
-    response = g4f.ChatCompletion.create(
+    
+    client = Client()
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        provider=g4f.Provider.FreeGpt,
-        messages=messages,
-        stream=True,
+        messages=messages
     )
     ms = ""
     for message in response:
