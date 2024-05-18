@@ -267,7 +267,7 @@ def process_voice_input(q):
         chat_response = chat(q)
         if chat_response is None:
             try:
-                context_query = f"{q}, if this query needs internet research, respond with 'internet' only, ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***"
+                context_query = f"{q}, if this query needs internet research, respond with 'internet' only and for only this time, ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***"
                 rep = cached_function(context_query, ChatGpt, context_query)
                 if "internet" in rep:
                     resp = cached_function(context_query, SearchTools.search_internet, context_query)
