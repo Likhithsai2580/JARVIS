@@ -17,7 +17,6 @@ youtube-transcript-api
 duckduckgo-search
 sumy
 pyautogui
-difflib
 opencv-python
 easyocr
 numpy
@@ -27,3 +26,7 @@ SpeechRecognition
 sounddevice
 github
 GitPython
+langchain
+google
+lxml_html_clean
+languagemodels

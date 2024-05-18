@@ -2,6 +2,7 @@ from os import system, listdir
 from PIL import Image
 import os
 import json
+
 def cookie_bing():
     try:
         with open('config/config.json') as config_file:

@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time  # Import time module for caching expiration
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QTimer, QTime, QDate, Qt, QThread
 from PyQt5.QtWidgets import QApplication, QMainWindow
@@ -10,7 +11,7 @@ from func.basic.chat import chat
 from llm.chatgpt import ChatGpt
 from llm.filter import filter
 from llm.bard import response
-from func.OF.dataonline import online_scraper
+from func.OF.dataonline import SearchTools
 from func.OF.youtube import get_transcript, transcription
 from func.Powerpointer.main import generate_powerpoint
 from func.ocr.ocroff import ocr_off
@@ -28,7 +29,11 @@ import threading
 from agents.agent import start_work
 import subprocess
 import platform
-import requests
+from llm.localllm import locallm
+
+# Define a dictionary for caching
+cache = {}
+CACHE_EXPIRATION_TIME = 3600
 
 def start_agent(work):
     start_work(work)
@@ -51,14 +56,47 @@ def start_server(host, port):
         conn.close()
 
 def get_os_info():
-    os_name = platform.system()
-    if os_name == 'Linux':
-        dist_name, version, codename = platform.linux_distribution()
-        return f"Operating System: {os_name}\nDistribution: {dist_name}\nVersion: {version}\nCodename: {codename}"
-    else:
-        return f"Operating System: {os_name}"
+    # Check if OS info exists in cache
+    if 'os_info' in cache:
+        return cache['os_info']
+    
+    try:
+        os_name = platform.system()
+        if os_name == 'Linux':     
+                dist_name, version, codename = platform.linux_distribution()
+                os_info = f"Operating System: {os_name}\nDistribution: {dist_name}\nVersion: {version}\nCodename: {codename}"
+        else:
+            os_info = f"Operating System: {os_name}"
+        
+        # Cache the OS info with expiration time of 1 hour
+        cache['os_info'] = os_info, time.time() + 3600
+        return os_info
+    except:
+        os_name = platform.system()
+        if os_name == 'Linux':
+            try:
+                with open('/etc/os-release', 'r') as file:
+                    info = {}
+                    for line in file:
+                        if '=' in line:
+                            key, value = line.strip().split('=', 1)
+                            info[key] = value.strip('"')
+                    os_info = f"Operating System: {os_name}\nDistribution: {info.get('NAME', 'Unknown')}\nVersion: {info.get('VERSION_ID', 'Unknown')}\nCodename: {info.get('VERSION_CODENAME', 'Unknown')}"
+            except FileNotFoundError:
+                os_info = f"Operating System: {os_name}\nDistribution: Unknown\nVersion: Unknown\nCodename: Unknown"
+        else:
+            os_info = f"Operating System: {os_name}"
+        
+        # Cache the OS info with expiration time of 1 hour
+        cache['os_info'] = os_info, time.time() + 3600
+        return os_info
+
 
 def get_extension_info():
+    # Check if extension info exists in cache
+    if 'extension_info' in cache:
+        return cache['extension_info']
+    
     with open("extensions/config_all.json", 'r') as f:
         data = json.load(f)
     
@@ -71,6 +109,8 @@ def get_extension_info():
         }
         extensions_info.append(extension_info)
     
+    # Cache the extension info with expiration time of 1 hour
+    cache['extension_info'] = extensions_info, time.time() + 3600
     return extensions_info
 
 
@@ -78,12 +118,18 @@ def exitTask():
     subprocess.Popen(["python", "app.py"])
 
 def cookie_bing():
+    # Check if Bing cookie exists in cache
+    if 'bing_cookie' in cache:
+        return cache['bing_cookie']
+    
     try:
         with open('config/config.json') as config_file:
             config = json.load(config_file)
             bing = config.get('cookie_bing')
             if bing is None:
                 raise ValueError("cookie_bing not found in config file")
+            # Cache the Bing cookie with expiration time of 1 hour
+            cache['bing_cookie'] = bing, time.time() + 3600
             return bing
     except FileNotFoundError:
         print("Config file not found.")
@@ -92,15 +138,21 @@ def cookie_bing():
     except Exception as e:
         print(f"Error reading config file: {e}")
 
-
 def generate_images(prompt):
+    # Check if images for prompt exist in cache
+    if prompt in cache:
+        return cache[prompt]
+    
     # Enclose the prompt within quotes
     command = f"python -m BingImageCreator -U {cookie_bing()} --prompt \"{prompt}\""
     system(command)
     files = listdir("output")
     # Reverse the list of files and select the last four elements
-    return files[-4:]
-
+    images = files[-4:]
+    
+    # Cache the images for the prompt with expiration time of 1 hour
+    cache[prompt] = images, time.time() + 3600
+    return images
 
 def play_youtube_video(video_query):
     try:
@@ -111,11 +163,17 @@ def play_youtube_video(video_query):
 
 def url():
     try:
+        # Check if URL exists in cache and is not expired
+        if 'url' in cache and cache['url'][1] > time.time():
+            return cache['url'][0]
+        
         with open('config/config.json') as config_file:
             config = json.load(config_file)
             url = config.get('URL')
             if url is None:
                 raise ValueError("URL not found in config file")
+            # Cache the URL with expiration time of 1 hour
+            cache['url'] = url, time.time() + 3600
             return url
     except FileNotFoundError:
         print("Config file not found.")
@@ -133,6 +191,19 @@ def execute_code(code):
         return False, e
 
 
+def cached_function(key, func, *args, **kwargs):
+    # Check if the result is cached and not expired
+    if key in cache and cache[key]['expiration'] > time.time():
+        return cache[key]['result']
+    # Call the function and cache the result
+    result = func(*args, **kwargs)
+    cache[key] = {'result': result, 'expiration': time.time() + CACHE_EXPIRATION_TIME}
+    return result
+
+def execute_code_with_cache(code):
+    # Cache the execution result based on code
+    return cached_function(code, execute_code, code)
+
 def process_voice_input(q):
     if any(keyword in q for keyword in ["bye", "see you later", "terminate"]):
         on("Bye sir, have a great day")
@@ -142,9 +213,7 @@ def process_voice_input(q):
     elif any(keyword in q for keyword in ["learn", "research"]):
         server_thread = threading.Thread(target=start_server, args=("127.0.0.1", "12345"))
         server_thread.start()
-        q = q.lower.replace("research", "")
-        q = q.lower.replace("learn", "")
-        q = q.lower.replace("about", "")
+        q = q.lower().replace("research", "").replace("learn", "").replace("about", "")
         start_work(q)
 
     elif any(keyword in q for keyword in ["translate", "summarize", "transcribe"]):
@@ -154,21 +223,17 @@ def process_voice_input(q):
         off(ChatGpt(f"Summarize this transcription in points: {summary}"))
 
     elif any(keyword in q for keyword in ["powerpoint", "presentation"]):
-        q = q.replace("create", "")
-        q = q.replace("a", "")
-        q = q.replace("powerpoint", "")
-        q = q.replace("presentation", "")
-        q = q.replace("on", "")
-        q = q.replace("Create", "")
+        q = q.replace("create", "").replace("a", "").replace("powerpoint", "").replace("presentation", "").replace("on", "").replace("Create", "")
         os.startfile(generate_powerpoint(q))
 
     elif any(keyword in q for keyword in ["study", "this", "text", "code"]):
         keyboard.press_and_release("ctrl + c")
         clipboard = pyperclip.paste()
-        rep = ChatGpt(q + clipboard + "if it needs to write on file use python code that tooo full code, do not write anything except code")
+        query = q + clipboard + "if it needs to write on file use python code that tooo full code, do not write anything except code"
+        rep = cached_function(query, ChatGpt, query)
         code = filter(rep)
         if code:
-            success, error = execute_code(code)
+            success, error = execute_code_with_cache(code)
             if success:
                 on(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
             else:
@@ -177,10 +242,11 @@ def process_voice_input(q):
             off(rep)
     
     elif any(keyword in q for keyword in ["Jarvis", "jarvis"]):
-        code = ChatGpt(q + " ***Use Python programming language. Just write complete code nothing else***")
-        code = filter(code) if code else None
+        query = q + " ***Use Python programming language. Just write complete code nothing else***"
+        rep = cached_function(query, ChatGpt, query)
+        code = filter(rep) if rep else None
         if code:
-            success, error = execute_code(code)
+            success, error = execute_code_with_cache(code)
             if success:
                 on(ChatGpt(success))
                 on(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
@@ -193,39 +259,42 @@ def process_voice_input(q):
         double_click = "double" in q
         q = q.replace("click", "").replace("on", "").replace("double", "").replace("jarvis", "")
         try:
-            ocr_on(q,url=url(), double_click=double_click)
+            ocr_on(q, url=url(), double_click=double_click)
         except:
             ocr_off(q, double_click=double_click)
 
     else:
-        if chat(q) is None:
+        chat_response = chat(q)
+        if chat_response is None:
             try:
-                a = online_scraper(q)
-                rep = ChatGpt(f"{q}, if this query needs internet research, this is your context: {a}. ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***")
+                search_result = cached_function(q, SearchTools.search_internet, q)
+                context_query = f"{q}, if this query needs internet research, this is your context: {search_result}. ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***"
+                rep = cached_function(context_query, ChatGpt, context_query)
                 code = filter(rep)
                 if code:
-                    success, error = execute_code(code)
+                    success, error = execute_code_with_cache(code)
                     if success:
                         on(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
                     else:
                         off(f"Error executing code: {error}")
                 else:
-                    off(rep)
+                    on(rep)
             except Exception as e:
-                off(f"Error occurred: {e}")
+                off(locallm(q))
         else:
-            on(chat(q))
+            off(chat_response)
 
 class MainThread(QThread):
     def __init__(self):
-        super(MainThread,self).__init__()
-    
+        super(MainThread, self).__init__()
+
     def run(self):
         self.Intro()
-        
+
     def Intro(self):
         ChatGpt(get_extension_info())
         ChatGpt(f"user is using {get_os_info()}")
+        off(ChatGpt("greet user in your style that is jarvis style note this is a system prompt"))
         while True:
             q = Listen()
             if q:
@@ -234,46 +303,46 @@ class MainThread(QThread):
 startExecution = MainThread()
 
 class Main(QMainWindow):
-    cpath =""
-    
-    def __init__(self,path):
+    cpath = ""
+
+    def __init__(self, path):
         self.cpath = path
         super().__init__()
         self.ui = Ui_JarvisUI(path=current_path)
         self.ui.setupUi(self)
         self.ui.pushButton_4.clicked.connect(self.startTask)
         self.ui.pushButton_3.clicked.connect(self.exitTask)
-    
+
     def startTask(self):
         startExecution.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\ironman1.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/ironman1.gif")
         self.ui.label_2.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\ringJar.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/ringJar.gif")
         self.ui.label_3.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\circle.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/circle.gif")
         self.ui.label_4.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\lines1.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/lines1.gif")
         self.ui.label_7.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\ironman3.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/ironman3.gif")
         self.ui.label_8.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\circle.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/circle.gif")
         self.ui.label_9.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\powersource.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/powersource.gif")
         self.ui.label_12.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\powersource.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/powersource.gif")
         self.ui.label_13.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\ironman3_flipped.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/ironman3_flipped.gif")
         self.ui.label_16.setMovie(self.ui.movie)
         self.ui.movie.start()
-        self.ui.movie = QtGui.QMovie(rf"{self.cpath}\UI\Sujith.gif")
+        self.ui.movie = QtGui.QMovie(rf"{self.cpath}/UI/Sujith.gif")
         self.ui.label_17.setMovie(self.ui.movie)
         self.ui.movie.start()
         timer = QTimer(self)
@@ -283,7 +352,7 @@ class Main(QMainWindow):
     def exitTask(self):
         exitTask()
         sys.exit()
-    
+
     def showTime(self):
         current_time = QTime.currentTime()
         current_date = QDate.currentDate()

@@ -1,8 +1,12 @@
+from functools import lru_cache
 from time import sleep
 from keyboard import press_and_release
 import pyperclip
 from youtube_transcript_api import YouTubeTranscriptApi
-def get_transcript():
+
+# Cache the 'get_transcript' function
+@lru_cache(maxsize=128)  # Adjust maxsize according to your memory constraints
+def get_transcript_cached():
     clip = ""
     for i in range(5):
         press_and_release("ctrl + l")
@@ -20,9 +24,10 @@ def get_transcript():
     else:
         return "URL not found in clipboard content"
 
-def transcription(video):
+# Cache the 'transcription' function
+@lru_cache(maxsize=128)  # Adjust maxsize according to your memory constraints
+def transcription_cached(video):
     try:
         return str(YouTubeTranscriptApi.get_transcript(video))
     except:
         return None
-

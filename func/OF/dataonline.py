@@ -1,66 +1,47 @@
-from duckduckgo_search import DDGS
-import json
-from itertools import islice
-import time
-from sumy.parsers.plaintext import PlaintextParser
+from functools import lru_cache
+from sumy.parsers.html import HtmlParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lex_rank import LexRankSummarizer
+from googlesearch import search
+import requests
+from langchain.tools import tool
 
+@lru_cache(maxsize=128)
+def fetch_content_cached(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.text
+    except Exception as e:
+        print(f"Error fetching content from {url}: {e}")
+    return None
 
-def summarize_paragraph(paragraph: str, num_sentences: int = 3) -> str:
-    """
-    Summarizes the given paragraph using LexRank algorithm.
+@lru_cache(maxsize=128)
+def GoogleSearch(q):
+    results = list(search(q, num=5, stop=5, pause=2))
+    summaries = []
+    for url in results:
+        content = fetch_content_cached(url)
+        if content:
+            parser = HtmlParser.from_string(content, url, Tokenizer("english"))
+            summarizer = LexRankSummarizer()
+            summary = summarizer(parser.document, 3)  # Summarize with 3 sentences
+            summaries.append("\n".join(str(sentence) for sentence in summary))
+    return summaries
 
-    Args:
-    - paragraph (str): The paragraph of text to be summarized.
-    - num_sentences (int): The number of sentences in the summary. Defaults to 3.
+class SearchTools():
+    @tool("Searches the internet and summarizes the results")
+    def search_internet(paragraph: str, num_sentences: int = 3) -> str:
+        """
+        Summarizes the search results for the given query using LexRank algorithm.
 
-    Returns:
-    - str: The summarized text.
-    """
-    parser = PlaintextParser.from_string(paragraph, Tokenizer("english"))
-    summarizer = LexRankSummarizer()
-    summary = summarizer(parser.document, num_sentences)
+        Args:
+        - paragraph (str): The query to search for.
+        - num_sentences (int): The number of sentences in each summary. Defaults to 3.
 
-    summarized_text = "\n".join(str(sentence) for sentence in summary)
-    return summarized_text
-
-
-def online_scraper(query: str, num_results: int = 2) -> list:
-    """
-    Scrapes online content using DuckDuckGo search and summarizes it.
-
-    Args:
-    - query (str): The search query.
-    - num_results (int): The number of search results to consider. Defaults to 2.
-
-    Returns:
-    - list: A list of dictionaries containing 'url' and 'summary' for each result.
-    """
-    DUCKDUCKGO_MAX_ATTEMPTS = 3
-
-    search_results = []
-    attempts = 0
-
-    while attempts < DUCKDUCKGO_MAX_ATTEMPTS:
-        if not query:
-            return search_results
-
-        results = DDGS().text(query)
-        search_results = list(islice(results, num_results))
-
-        if search_results:
-            break
-
-        time.sleep(1)
-        attempts += 1
-
-    all_data = []
-    for result in search_results:
-        url = result.get("url", "")
-        paragraph = result.get("body", "")
-        summary = summarize_paragraph(paragraph)
-        all_data.append({"url": url,"paragraph": paragraph, "summary": summary})
-
-    return all_data
-
+        Returns:
+        - str: The summarized text.
+        """
+        summaries = GoogleSearch(paragraph)
+        summarized_text = "\n\n".join(summaries)
+        return summarized_text

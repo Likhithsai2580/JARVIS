@@ -1,6 +1,9 @@
 import os
 import pygame
+from functools import lru_cache
 
+# Cache the 'mid' function
+@lru_cache(maxsize=128)  # Adjust maxsize according to your memory constraints
 def mid(text):
     command = f'edge-tts --voice "en-CA-LiamNeural" --pitch=+9Hz --rate=+22% --text "{text}" --write-media "data.mp3"'
     os.system(command)

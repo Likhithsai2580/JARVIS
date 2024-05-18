@@ -105,19 +105,23 @@ Now, feel free to utilize any extension whenever needed by providing correspondi
     }
 ]
 
-def ChatGpt(message:str):
-    #assert message==""
+def ChatGpt(message: str):
     global messages
 
-    messages.append({"role":"user", "content":message})
-    
+    # Append user message to messages list
+    messages.append({"role": "user", "content": message})
+
+    # Create client and get response
     client = Client()
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=messages
     )
-    ms = ""
-    for message in response:
-        ms+=message
-    messages.append({"role":"assistant", "content":ms})
+
+    # Extract assistant message from response
+    ms = response.choices[0].message.content
+
+    # Append assistant message to messages list
+    messages.append({"role": "assistant", "content": ms})
+
     return ms
