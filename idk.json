@@ -1,0 +1,129 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/Jarvis.ico"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/app.py:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/builtin.py:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/data.mp3:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/generation_of_images.py:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/Jarvis.ico:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/JarvisUi.py:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/JarvisUI.ui:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/LICENSE:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/README.md:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS/requirements.txt:."
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "/home/anony/Desktop/my_projects/JARVIS:JARVIS/"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

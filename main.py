@@ -12,13 +12,13 @@ from llm.chatgpt import ChatGpt
 from llm.filter import filter
 from llm.bard import response
 from func.OF.dataonline import SearchTools
-from func.OF.youtube import get_transcript, transcription
+from func.OF.youtube import get_transcript_cached as get_transcript
+from func.OF.youtube import transcription_cached as transcription
 from func.Powerpointer.main import generate_powerpoint
 from func.ocr.ocroff import ocr_off
 from func.ocr.ocron import ocr_on
 from func.speak.speakmid import mid as off
 from func.speak.speakon import speak as on
-from func.OF.youtube import get_transcript, transcription
 import pywhatkit as kit
 from os import system, listdir
 from PIL import Image
@@ -268,17 +268,20 @@ def process_voice_input(q):
         if chat_response is None:
             try:
                 search_result = cached_function(q, SearchTools.search_internet, q)
-                context_query = f"{q}, if this query needs internet research, this is your context: {search_result}. ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***"
+                context_query = f"{q}, if this query needs internet research, respond with 'internet' only, ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***"
                 rep = cached_function(context_query, ChatGpt, context_query)
-                code = filter(rep)
-                if code:
-                    success, error = execute_code_with_cache(code)
-                    if success:
-                        on(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
-                    else:
-                        off(f"Error executing code: {error}")
+                if "internet" in rep:
+                    on(ChatGpt(f"{SearchTools.search_internet(q)}, now resond to user with this context"))
                 else:
-                    on(rep)
+                    code = filter(rep)
+                    if code:
+                        success, error = execute_code_with_cache(code)
+                        if success:
+                            on(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
+                        else:
+                            off(f"Error executing code: {error}")
+                    else:
+                        on(rep)
             except Exception as e:
                 off(locallm(q))
         else:
