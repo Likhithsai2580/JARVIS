@@ -1,6 +1,8 @@
+import g4f.Provider
+import g4f.Provider.bing
 from g4f.client import Client
 import json
-
+import g4f
 messages = [
     {
         "role": "system",
@@ -115,6 +117,7 @@ def ChatGpt(message: str):
     client = Client()
     response = client.chat.completions.create(
         model="gpt-4",
+        provider=g4f.Provider.You,
         messages=messages
     )
 
@@ -125,3 +128,5 @@ def ChatGpt(message: str):
     messages.append({"role": "assistant", "content": ms})
 
     return ms
+
+print(g4f.Provider.You.get_models())
