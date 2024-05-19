@@ -30,6 +30,7 @@ from agents.agent import start_work
 import subprocess
 import platform
 from llm.localllm import locallm
+from func.OF.obj_detect import capture_and_send_image
 
 # Define a dictionary for caching
 cache = {}
@@ -169,9 +170,9 @@ def url():
         
         with open('config/config.json') as config_file:
             config = json.load(config_file)
-            url = config.get('URL')
+            url = config.get('OCR_Colab')
             if url is None:
-                raise ValueError("URL not found in config file")
+                raise ValueError("OCR_Colab not found in config file")
             # Cache the URL with expiration time of 1 hour
             cache['url'] = url, time.time() + 3600
             return url
@@ -271,6 +272,11 @@ def process_voice_input(q):
                 rep = cached_function(context_query, ChatGpt, context_query)
                 if "internet" in rep:
                     resp = cached_function(context_query, SearchTools.search_internet, context_query)
+                    resp = f"{resp}, now reply to user"
+                    resp = cached_function(resp, ChatGpt, resp)
+                    cached_function(resp, on, resp)
+                elif "access_camera" in rep:
+                    resp = cached_function(capture_and_send_image)
                     resp = f"{resp}, now reply to user"
                     resp = cached_function(resp, ChatGpt, resp)
                     cached_function(resp, on, resp)
