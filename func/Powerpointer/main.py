@@ -51,11 +51,11 @@ def generate_powerpoint(user_input, design_number=1):
 
     def create_ppt_text(input_text):
         response = g4f.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            provider=g4f.Provider.FreeGpt,
+            model="gpt-4",
+            provider=g4f.Provider.You,
             messages=[
                 {"role": "system", "content": Prompt},
-                {"role": "user", "content": f"The user wants a presentation about {input_text}"}
+                {"role": "user", "content": f"The user wants a presentation about {input_text} in english only"}
             ],
             stream=False
         )
@@ -118,10 +118,10 @@ def generate_powerpoint(user_input, design_number=1):
         return file_path
 
     # Generate a filename using OpenAI API
-    filename_prompt = f"Generate a short, descriptive filename based on the following input: \"{user_input}\". Answer just with the short filename, no other explanation."
+    filename_prompt = f"Generate a short, descriptive filename based on the following input: \"{user_input}\". Answer just with the short filename which should be in english, no other explanation."
     filename_response = g4f.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        provider=g4f.Provider.FreeGpt,
+        model="gpt-4",
+        provider=g4f.Provider.You,
         messages=[
             {"role": "system", "content": filename_prompt}
         ],
