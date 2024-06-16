@@ -1,9 +1,12 @@
-#https://colab.research.google.com/drive/1t1hYuKqQIyxuiBw2y6Ja66iNxa-nuCgK?usp=sharing
+#https://colab.research.google.com/drive/1xenMnAqGydJnsNV5C9aQ4ysrOCdNgXdf?usp=sharing
+
 import cv2
 import requests
 import json
 import time 
+import base64
 cache = {}
+
 def url():
     try:
         # Check if URL exists in cache and is not expired
@@ -29,44 +32,36 @@ def capture_and_send_image():
     # URL of the FastAPI server endpoint
     api_url = url()
 
-    # Open the camera
+    # Replace this URL with your ngrok URL
+    ngrok_url = f"{api_url}/stream"
+
+    # Initialize webcam
     cap = cv2.VideoCapture(0)
 
-    # Check if the camera is opened successfully
-    if not cap.isOpened():
-        print("Error: Failed to open camera")
-        return
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-    # Capture a single frame
-    ret, frame = cap.read()
+        # Encode frame to JPEG
+        _, buffer = cv2.imencode('.jpg', frame)
+        jpg_as_text = base64.b64encode(buffer).decode('utf-8')
 
-    # Check if the frame is captured successfully
-    if not ret:
-        print("Error: Failed to capture frame")
-        return
+        # Send frame to server
+        response = requests.post(ngrok_url, data={'image': jpg_as_text})
+        
+        if response.status_code == 200:
+            print("Frame sent successfully")
+        else:
+            print("Failed to send frame")
 
-    # Release the camera
-    cap.release()
+        # Display the resulting frame
+        cv2.imshow('Webcam', frame)
+        
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
-    # Prepare the payload
-    _, img_encoded = cv2.imencode('.jpg', frame)
-    files = {'file': img_encoded.tobytes()}
+# When everything done, release the capture
+cap.release()
+cv2.destroyAllWindows()
 
-    # Send a POST request to the server
-    response = requests.post(api_url, files=files)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Parse the JSON response
-        result = response.json()
-        detections = result['detections']
-        object_names = [obj['name'] for obj in detections[0] if obj['confidence'] > 0.5]  # Adjust confidence threshold as needed
-        return("Detected objects:", object_names)
-    else:
-        # Print error message if request fails
-        print("Error:", response.text)
-
-    # Display the captured frame
-    cv2.imshow('Captured Image', frame)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()

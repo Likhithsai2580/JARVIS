@@ -270,17 +270,7 @@ def process_voice_input(q):
             try:
                 context_query = f"{q}, if this query needs internet research, respond with 'internet' only and for only this time, ***Reply like Tony Stark's Jarvis in fewer words. If it's to perform an action on the computer, write complete code in Python, nothing else.***"
                 rep = cached_function(context_query, ChatGpt, context_query)
-                if "internet" in rep:
-                    resp = cached_function(context_query, SearchTools.search_internet, context_query)
-                    resp = f"{resp}, now reply to user"
-                    resp = cached_function(resp, ChatGpt, resp)
-                    cached_function(resp, on, resp)
-                elif "access_camera" in rep:
-                    resp = cached_function(capture_and_send_image)
-                    resp = f"{resp}, now reply to user"
-                    resp = cached_function(resp, ChatGpt, resp)
-                    cached_function(resp, on, resp)
-                else:
+                try:
                     code = filter(rep)
                     if code:
                         success, error = execute_code_with_cache(code)
@@ -290,6 +280,8 @@ def process_voice_input(q):
                             off(f"Error executing code: {error}")
                     else:
                         on(rep)
+                except Exception as e:
+                    print(e)
             except Exception as e:
                 off(locallm(q))
         else:

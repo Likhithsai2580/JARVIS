@@ -108,6 +108,26 @@ result = extension1(param1, param2)
 Replace param1, param2, etc., with the actual parameters required by the extension.
 Now, feel free to utilize any extension whenever needed by providing corresponding Python code only.
 """
+    },
+    {
+        "role":"system",
+        "content":"you should respond in python code only, it should run perfectly and nothing less and nothing more."
+    },
+    {
+        "role":"user",
+        "content":"hi, how are you"
+    },
+    {
+        "role":"assistant",
+        "content":"""
+'''python
+from func.speak.speakon import speak as on
+from func.speak.speakmid import mid as off
+try:
+    on("Hi i am fine, thanks for asking")
+except:
+    off("Hi i am fine, thanks for asking")
+    """
     }
 ]
 
