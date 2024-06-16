@@ -69,7 +69,7 @@ Using Jarvis is straightforward:
     python main.py
     ```
 
-4. **Config APIs**: Jarvis works without configuring apis but slowly, as all the APIS are free we recommend configuring them.. GEMINI_API can be taken from [here](https://aistudio.google.com/app/apikey). cookie_bing from [here](https://bing.com).. and OCR_Colab & Img_Detection_Colab can be taken from [Object Detection](https://colab.research.google.com/drive/1t1hYuKqQIyxuiBw2y6Ja66iNxa-nuCgK?usp=sharing) and [OCR(optical character recognition)](https://colab.research.google.com/drive/182IO3kVuEtX2fX3RgB4G_nlr_hkFKriD?usp=sharing)
+4. **Config APIs**: Jarvis works without configuring apis but slowly, as all the APIS are free we recommend configuring them.. GEMINI_API can be taken from [here](https://aistudio.google.com/app/apikey). cookie_bing from [here](https://bing.com).. and  Img_Detection_Colab & OCR_Colab can be taken from [Object Detection](https://colab.research.google.com/drive/1xenMnAqGydJnsNV5C9aQ4ysrOCdNgXdf?usp=sharing) and [OCR(optical character recognition)](https://colab.research.google.com/drive/182IO3kVuEtX2fX3RgB4G_nlr_hkFKriD?usp=sharing)
 
 
 4. **Interact with Jarvis**: Use the GUI interface or voice commands to interact with Jarvis. Explore its features, execute tasks, and enjoy the seamless user experience.
