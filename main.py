@@ -236,7 +236,7 @@ def process_voice_input(q):
         if code:
             success, error = execute_code_with_cache(code)
             if success:
-                on(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
+                execute_code_with_cache(ChatGpt(f"You successfully completed the task for {q}. Respond for your successful completion."))
             else:
                 off(f"Error executing code: {error}")
         else:
@@ -275,7 +275,7 @@ def process_voice_input(q):
                     if code:
                         success, error = execute_code_with_cache(code)
                         if success:
-                            on(ChatGpt(f"Output: {success}, respond for this action if it is, or else ask for any another help"))
+                            execute_code_with_cache(ChatGpt(f"Output: {success}, respond for this action if it is, or else ask for any another help"))
                         else:
                             off(f"Error executing code: {error}")
                     else:

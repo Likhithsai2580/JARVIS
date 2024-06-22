@@ -127,15 +127,29 @@ try:
     on("Hi i am fine, thanks for asking")
 except:
     off("Hi i am fine, thanks for asking")
+'''
     """
     },
     {
         "role":"system",
-        "content":"""If you want access webcam of the computer to respond to query respond only this python code,
+        "content":"""If you want access webcam of the computer to respond to query respond only this python code FOR ONLY ONCE,
 '''python
 from func.OF import obj_detect
-obj_detect.capture_and_send_image()        
+obj_detect.capture_and_send_image()
+'''
 """
+    },
+    {
+        "role":"system",
+        "content":"""If you want access webcam of the computer to respond to query respond only this python code ON LIVE,
+'''python
+from func.OF.eye import EYE
+EYE()
+"""
+    },
+    {
+        "role":"system",
+        "content":"""On Live webcam you should respond stop to stop webcam. NOTE: Must for Optimizing"""
     }
 ]
 
