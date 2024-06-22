@@ -30,7 +30,3 @@ langchain
 google
 lxml_html_clean
 languagemodels
-crewai
-crewai[tools]
-git+https://github.com/MIDORIBIN/langchain-gpt4free.git
-langchain-community
