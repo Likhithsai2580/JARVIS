@@ -38,30 +38,23 @@ def capture_and_send_image():
     # Initialize webcam
     cap = cv2.VideoCapture(0)
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+    ret, frame = cap.read()
+    if not ret:
+        break
 
-        # Encode frame to JPEG
-        _, buffer = cv2.imencode('.jpg', frame)
-        jpg_as_text = base64.b64encode(buffer).decode('utf-8')
+    # Encode frame to JPEG
+    _, buffer = cv2.imencode('.jpg', frame)
+    jpg_as_text = base64.b64encode(buffer).decode('utf-8')
 
-        # Send frame to server
-        response = requests.post(ngrok_url, data={'image': jpg_as_text})
-        
-        if response.status_code == 200:
-            print("Frame sent successfully")
-        else:
-            print("Failed to send frame")
-
-        # Display the resulting frame
-        cv2.imshow('Webcam', frame)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-# When everything done, release the capture
-cap.release()
-cv2.destroyAllWindows()
+    # Send frame to server
+    response = requests.post(ngrok_url, data={'image': jpg_as_text})
+    
+    if response.status_code == 200:
+        print("Frame sent successfully")
+        return response
+    else:
+        print("Failed to send frame")
+    cap.release()
+    cv2.destroyAllWindows()
+    break
 

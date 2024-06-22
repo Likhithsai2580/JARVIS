@@ -128,6 +128,14 @@ try:
 except:
     off("Hi i am fine, thanks for asking")
     """
+    },
+    {
+        "role":"system",
+        "content":"""If you want access webcam of the computer to respond to query respond only this python code,
+'''python
+from func.OF import obj_detect
+obj_detect.capture_and_send_image()        
+"""
     }
 ]
 
