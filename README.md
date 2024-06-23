@@ -34,20 +34,15 @@ Getting started with Jarvis is quick and easy. Follow these steps to set up Jarv
 Jarvis offers a wide range of features tailored to meet your diverse needs:
 
 - **Voice Recognition and Processing**: Communicate with Jarvis using natural language commands, making interactions intuitive and efficient.
-
 - **Web Scraping**: Extract data from websites with ease, whether it's for research, analysis, or gathering information.
-
 - **OCR (Optical Character Recognition)**: Extract text from images or scanned documents effortlessly, opening up possibilities for digitizing content.
-
 - **Image Generation**: Create visual content dynamically based on your specifications, saving time on graphic design tasks.
-
 - **PowerPoint Presentation Generation**: Generate professional presentations automatically from text or data sources, simplifying the process of creating engaging slideshows.
-
 - **Natural Language Processing (NLP)**: Understand and respond to user queries intelligently, providing relevant and contextually appropriate responses.
-
 - **Machine Learning Integration**: Benefit from machine learning algorithms for predictive analysis, recommendation systems, and personalized interactions.
-
 - **Object Detection with Camera Access**: Utilize object detection capabilities with camera access for fast processing. Check out the provided Colab notebook for efficient object detection tasks.
+- **Software Development**: Generate code snippets or even complete software based on your requirements.
+- **Task Automation**: Automate repetitive tasks and workflows to save time and increase efficiency.
 
 ## Usage 🚀
 
@@ -69,10 +64,9 @@ Using Jarvis is straightforward:
     python main.py
     ```
 
-4. **Config APIs**: Jarvis works without configuring apis but slowly, as all the APIS are free we recommend configuring them.. GEMINI_API can be taken from [here](https://aistudio.google.com/app/apikey). cookie_bing from [here](https://bing.com).. and  Img_Detection_Colab & OCR_Colab can be taken from [Object Detection](https://colab.research.google.com/drive/1xenMnAqGydJnsNV5C9aQ4ysrOCdNgXdf?usp=sharing) and [OCR(optical character recognition)](https://colab.research.google.com/drive/182IO3kVuEtX2fX3RgB4G_nlr_hkFKriD?usp=sharing)
+4. **Configure APIs**: Jarvis works without configuring APIs but is slower. As all the APIs are free, we recommend configuring them. GEMINI_API can be taken from [here](https://aistudio.google.com/app/apikey), cookie_bing from [here](https://bing.com), and camera & OCR_Colab can be taken from [camera](https://colab.research.google.com/drive/1xenMnAqGydJnsNV5C9aQ4ysrOCdNgXdf?usp=sharing) and [OCR (optical character recognition)](https://colab.research.google.com/drive/182IO3kVuEtX2fX3RgB4G_nlr_hkFKriD?usp=sharing).
 
-
-4. **Interact with Jarvis**: Use the GUI interface or voice commands to interact with Jarvis. Explore its features, execute tasks, and enjoy the seamless user experience.
+5. **Interact with Jarvis**: Use the GUI interface or voice commands to interact with Jarvis. Explore its features, execute tasks, and enjoy the seamless user experience.
 
 ## Contributions Welcome 🤝
 
@@ -91,3 +85,12 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Thank you for considering contributing to Project Jarvis! If you have any questions, suggestions, feedback, or feature requests, feel free to reach out. Your input is essential to the ongoing improvement of Project Jarvis. Happy coding with Jarvis! 🤖
 
 [YouTube Channel](https://www.youtube.com/@Hackersareherewhereareyou/featured)
+
+---
+
+## TODOs
+
+- **Implement New GUI**: Design and implement a new graphical user interface for a better user experience.
+- **Implement Rawdog**: Develop logic to call and execute functions efficiently.
+
+---
