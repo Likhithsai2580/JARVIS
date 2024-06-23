@@ -18,7 +18,7 @@ class RawDog:
         self.prompt = prompt
 
     def install_pip_packages(self, *packages: str):
-        python_executable = rf'{get_key(".env", "PYTHON_EXE")}'
+        python_executable = "python"
         print(f"Installing {', '.join(packages)} with pip...")
         return subprocess.run(
             [python_executable, "-m", "pip", "install", *packages],
