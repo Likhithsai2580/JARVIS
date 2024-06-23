@@ -15,7 +15,7 @@ def url():
         
         with open('config/config.json') as config_file:
             config = json.load(config_file)
-            url = config.get('Img_Detection_Colab')
+            url = config.get('camera')
             if url is None:
                 raise ValueError("Img_Detection_Colab not found in config file")
             # Cache the URL with expiration time of 1 hour
