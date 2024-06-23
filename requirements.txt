@@ -30,3 +30,4 @@ langchain
 google
 lxml_html_clean
 languagemodels
+functools

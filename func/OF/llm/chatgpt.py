@@ -148,24 +148,11 @@ obj_detect.capture_and_send_image()
 '''python
 from func.OF.eye import EYE
 EYE()
-'''
 """
     },
     {
         "role":"system",
         "content":"""If you want to stop the live webcam, you should respond with only with stop"""
-    },
-    {
-        "role":"system",
-        "content":"""If you given to create a software or complicated action, run this python code,
-'''python
-from func.codebrew import CodeBrew, codebrewPrompt, samplePrompt
-from llm.chatgpt import ChatGpt
-
-while 1:
-    CodeBrew(llm, keepHistory=False).run(input(">>> "))
-'''
-"""
     }
 ]
 

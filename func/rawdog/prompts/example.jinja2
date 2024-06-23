@@ -1,0 +1,50 @@
+EXAMPLES:
+-------------------------------------------------------------------------------
+PROMPT: Kill the process running on port 3000
+
+SCRIPT:
+```
+import os
+try:
+    os.system("kill $(lsof -t -i:3000)")
+    print("Process killed")
+except Exception as e:
+    print("Error:", e)
+```
+-------------------------------------------------------------------------------
+PROMPT: Rename the photos in this directory with "nyc" and their timestamp
+
+SCRIPT:
+```
+import os
+import time
+try:
+    image_files = [f for f in os.listdir('.') if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+    def get_name(f):
+        timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime(os.path.getmtime(f)))
+        return f"nyc_{timestamp}{os.path.splitext(f)[1]}"
+    [os.rename(f, get_name(f)) for f in image_files]
+    print("Renamed files")
+except Exception as e:
+    print("Error:", e)
+```
+-------------------------------------------------------------------------------
+PROMPT: Summarize my essay, "Essay 2021-09-01.txt"
+
+SCRIPT:
+```
+with open("Essay 2021-09-01.txt", "r") as f:
+    print(f.read())
+print("CONTINUE")
+```
+
+LAST SCRIPT OUTPUT:
+John Smith
+Essay 2021-09-01
+...
+
+SCRIPT:
+```
+print("The essay is about...")
+```
+-------------------------------------------------------------------------------

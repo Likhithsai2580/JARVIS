@@ -1,0 +1,310 @@
+[
+    {
+        "query": "open fackebook",
+        "response": [
+            {
+                "role":"user",
+                "content":"open fackebook"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport webbrowser\ntry:\n    webbrowser.open(\"https://www.facebook.com/\")\n    print(\"facebook opened\")\nexcept:\n    print(\"CONTINUE\")\n```\n"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nfacebook opened\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('I have opened facebook')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nI have opened facebook"
+            }
+        ]
+    },
+    {
+        "query": "summarize main.py",
+        "response": [
+            {
+                "role":"user",
+                "content":"summarize main.py"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport os\n\nprint(os.listdir())\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\n['main.py', 'requirements.txt', 'venv']\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nwith open(\"main.py\", \"r\") as f:\n    print(f.read())\nprint(\"CONTINUE\")\n```\n"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nprint(\"this is a simple calculator enter your expression like 2+2\")\nev = input(\">>> \")\nprint(eval(ev))\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('this is a calculaor made in python in this script\nit can add, subtract, multiply and divide\nby entering your expression like 2+2 or 2*2')```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nthis is a calculaor made in python in this script\nit can add, subtract, multiply and divide\nby entering your expression like 2+2 or 2*2"
+            }
+        ]
+    },
+    {
+        "query": "generate random number",
+        "response": [
+            {
+                "role":"user",
+                "content":"generate random number"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport random\n\nrandom_number = random.randint(1, 100)\nprint(f'Generated random number: {random_number}')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nGenerated random number: 42\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Generated a random number between 1 and 100.')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nGenerated a random number between 1 and 100."
+            }
+        ]
+    },
+    {
+        "query": "search Python documentation",
+        "response": [
+            {
+                "role":"user",
+                "content":"search Python documentation"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport webbrowser\n\nsearch_query = 'Python documentation'\nurl = f'https://www.google.com/search?q={search_query}'\nwebbrowser.open(url)\nprint('Opened Python documentation search')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nOpened Python documentation search\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Opened the Python documentation search in your web browser.')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nOpened the Python documentation search in your web browser."
+            }
+        ]
+    },
+    {
+        "query": "calculate square root",
+        "response": [
+            {
+                "role":"user",
+                "content":"calculate square root of 16"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport math\n\nnumber = 16\nsquare_root = math.sqrt(number)\nprint(f'The square root of {number} is {square_root:.2f}')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nThe square root of 16 is 4.00\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Calculated the square root of 16 which is 4.00')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nCalculated the square root of 16 which is 4.00"
+            }
+        ]
+    },
+    {
+        "query": "read file contents",
+        "response": [
+            {
+                "role":"user",
+                "content":"read contents of file.txt"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nfile_path = 'file.txt'\n\ntry:\n    with open(file_path, 'r') as file:\n        contents = file.read()\n    print(f'Contents of {file_path}:\n{contents}')\nexcept FileNotFoundError:\n    print(f'File {file_path} not found')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nContents of file.txt:\nThis is the content of file.txt\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Displayed contents of file.txt')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nDisplayed contents of file.txt"
+            }
+        ]
+    },
+    {
+        "query": "plot sine wave",
+        "response": [
+            {
+                "role":"user",
+                "content":"plot sine wave"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 2 * np.pi, 100)\ny = np.sin(x)\n\nplt.plot(x, y)\nplt.xlabel('x')\nplt.ylabel('sin(x)')\nplt.title('Sine Wave')\nplt.grid(True)\nplt.show()\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\n<plot will be shown here>\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Displayed a plot of the sine wave')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nDisplayed a plot of the sine wave"
+            }
+        ]
+    },
+    {
+        "query": "find largest number in list",
+        "response": [
+            {
+                "role":"user",
+                "content":"find largest number in [5, 10, 3, 8, 15]"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nnumbers = [5, 10, 3, 8, 15]\nlargest = max(numbers)\nprint(f'The largest number in the list is: {largest}')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nThe largest number in the list is: 15\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Found the largest number in the list which is 15')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nFound the largest number in the list which is 15"
+            }
+        ]
+    },
+    {
+        "query": "count words in text",
+        "response": [
+            {
+                "role":"user",
+                "content":"count words in 'This is a sample sentence.'"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\ntext = 'This is a sample sentence.'\nword_count = len(text.split())\nprint(f'The number of words in the text is: {word_count}')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nThe number of words in the text is: 5\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Counted the number of words in the text which is 5')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nCounted the number of words in the text which is 5"
+            }
+        ]
+    },
+    {
+        "query": "generate QR code",
+        "response": [
+            {
+                "role":"user",
+                "content":"generate QR code for 'https://example.com'"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport qrcode\n\nurl = 'https://example.com'\nqr = qrcode.QRCode(version=1, box_size=10, border=5)\nqr.add_data(url)\nqr.make(fit=True)\nimg = qr.make_image(fill='black', back_color='white')\nimg.save('qrcode.png')\nprint('Generated QR code for the URL')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nGenerated QR code for the URL\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Generated a QR code for the URL')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nGenerated a QR code for the URL"
+            }
+        ]
+    },
+    {
+        "query": "check internet speed",
+        "response": [
+            {
+                "role":"user",
+                "content":"check internet speed"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport speedtest\n\nst = speedtest.Speedtest()\ndownload_speed = st.download() / 1_000_000\nupload_speed = st.upload() / 1_000_000\n\nprint(f'Download speed: {download_speed:.2f} Mbps')\nprint(f'Upload speed: {upload_speed:.2f} Mbps')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nDownload speed: 50.23 Mbps\nUpload speed: 10.45 Mbps\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Checked internet speed: Download speed 50.23 Mbps, Upload speed 10.45 Mbps')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nChecked internet speed: Download speed 50.23 Mbps, Upload speed 10.45 Mbps"
+            }
+        ]
+    },
+    {
+        "query": "send email",
+        "response": [
+            {
+                "role":"user",
+                "content":"send email"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nimport smtplib\nfrom email.mime.text import MIMEText\nfrom email.mime.multipart import MIMEMultipart\n\n# Email configuration\nsender_email = 'your_email@gmail.com'\nreceiver_email = 'recipient_email@gmail.com'\npassword = 'your_password'\nsubject = 'Test Email'\nbody = 'This is a test email'\n\n# Create message\nmessage = MIMEMultipart()\nmessage['From'] = sender_email\nmessage['To'] = receiver_email\nmessage['Subject'] = subject\nmessage.attach(MIMEText(body, 'plain'))\n\n# Send email\ntry:\n    server = smtplib.SMTP('smtp.gmail.com', 587)\n    server.starttls()\n    server.login(sender_email, password)\n    server.sendmail(sender_email, receiver_email, message.as_string())\n    print('Email sent successfully')\n    server.quit()\nexcept Exception as e:\n    print(f'Failed to send email. Error: {str(e)}')\nprint(\"CONTINUE\")\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nEmail sent successfully\nCONTINUE"
+            },
+            {
+                "role":"assistant",
+                "content":"```python\nprint('Sent email successfully')\n```"
+            },
+            {
+                "role":"user",
+                "content":"LAST SCRIPT OUTPUT:\nSent email successfully"
+            }
+        ]
+    }
+]
