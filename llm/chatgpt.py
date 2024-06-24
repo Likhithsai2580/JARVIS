@@ -166,6 +166,19 @@ while 1:
     CodeBrew(llm, keepHistory=False).run(input(">>> "))
 '''
 """
+    },
+    {
+        "role":"system",
+        "content":"""If you want to access the SCREENSHARE on live of the computer to respond to a query, respond with only this Python code:,
+'''python
+from func.OF.screenshare import SCREENSHARE
+SCREENSHARE()
+'''
+"""
+    },
+    {
+        "role":"system",
+        "content":"""If you want to stop live stream on SCREENSHARE, you should respond with only with stop"""
     }
 ]
 
