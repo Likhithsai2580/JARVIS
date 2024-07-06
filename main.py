@@ -5,12 +5,27 @@ import webbrowser
 
 from interface import Ui_JARVIS  # Assuming Ui_JARVIS is defined in interface.py
 
+class ExternalProcess(QtCore.QObject):
+    update_text = QtCore.pyqtSignal(str)
+
+    def __init__(self, command):
+        super().__init__()
+        self.command = command
+
+    def run(self):
+        process = QtCore.QProcess()
+        process.start(" ".join(self.command))
+        process.waitForFinished()
+        output = process.readAllStandardOutput().data().decode()
+        self.update_text.emit(output)
+
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_JARVIS()
         self.ui.setupUi(self)
         self.connect_buttons()
+        self.external_thread = None
 
     def connect_buttons(self):
         self.ui.home.clicked.connect(self.show_home)
@@ -26,10 +41,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.external_thread and self.external_thread.isRunning():
             return
 
-        # Replace 'python your_script.py' with your actual command
         command = ['python', 'JARVIS.py']
         self.external_process = ExternalProcess(command)
-        self.external_thread = QThread()
+        self.external_thread = QtCore.QThread()
         self.external_process.moveToThread(self.external_thread)
 
         self.external_process.update_text.connect(self.append_text)
@@ -39,7 +53,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def append_text(self, text):
         cursor = self.ui.console.textCursor()
-        cursor.movePosition(QTextCursor.End)
+        cursor.movePosition(QtGui.QTextCursor.End)
         cursor.insertText(text)
         self.ui.console.setTextCursor(cursor)
         self.ui.console.ensureCursorVisible()
@@ -56,7 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def load_gif(self, path, label):
         movie = QtGui.QMovie(path)
         label.setMovie(movie)
-        label.setScaledContents(True)  # Ensure the GIF scales with the label
+        label.setScaledContents(True)
         movie.start()
 
     def load_second_gif(self):
