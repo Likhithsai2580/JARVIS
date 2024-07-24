@@ -179,6 +179,19 @@ SCREENSHARE()
     {
         "role":"system",
         "content":"""If you want to stop live stream on SCREENSHARE, you should respond with only with stop"""
+    },
+    {
+        "role":"system",
+        "content":"""if you want to click on text, you should reply with this python code
+'''python
+double_click = "double" in q
+q = q.replace("click", "").replace("on", "").replace("double", "").replace("jarvis", "")
+try:
+    ocr_on(q, url=url(), double_click=double_click)
+except:
+    ocr_off(q, double_click=double_click)
+'''
+"""
     }
 ]
 
