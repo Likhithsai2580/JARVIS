@@ -4,7 +4,7 @@ Welcome to Project Jarvis, your advanced AI assistant designed to simplify tasks
 
 ## Overview 🚀
 
-Jarvis is more than just another virtual assistant; it’s a comprehensive solution packed with powerful features. Combining voice recognition, web scraping, and machine learning into a user-friendly interface, Jarvis makes complex tasks effortless.
+Jarvis is more than just another virtual assistant; it's a comprehensive solution packed with powerful features. Combining voice recognition, web scraping, and machine learning into a user-friendly interface, Jarvis makes complex tasks effortless.
 
 ## Getting Started 🔧
 
@@ -66,9 +66,73 @@ Jarvis offers a wide range of features:
 
 5. **Interact with Jarvis**: Use the GUI interface or voice commands to explore features and execute tasks.
 
+## Advanced Configuration 🛠️
+
+### Customizing Voice Commands
+
+You can extend Jarvis's voice recognition capabilities by adding new commands in the `voice_commands.py` file:
+
+```python
+VOICE_COMMANDS = {
+    "open browser": open_browser,
+    "check weather": check_weather,
+    # Add your custom commands here
+}
+```
+
+### Integrating New APIs
+
+To integrate a new API, add its configuration to `config.json`:
+
+```json
+{
+  "apis": {
+    "new_api_name": {
+      "key": "your_api_key_here",
+      "endpoint": "https://api.example.com/v1"
+    }
+  }
+}
+```
+
+Then, create a new module in the `apis` directory to handle the API interactions.
+
+## Performance Optimization 🚀
+
+To ensure Jarvis runs smoothly on your system:
+
+1. **Use a Virtual Environment**: Isolate Jarvis's dependencies from your system-wide Python installation.
+2. **Enable Caching**: Implement caching for frequently accessed data to reduce API calls and improve response times.
+3. **Parallel Processing**: Utilize Python's `multiprocessing` module for CPU-intensive tasks.
+
+## Troubleshooting 🔍
+
+Common issues and their solutions:
+
+- **API Connection Errors**: Ensure your API keys are correctly configured in `config.json`.
+- **Voice Recognition Issues**: Check your microphone settings and ensure you're in a quiet environment.
+- **Slow Performance**: Consider upgrading your hardware or optimizing resource-intensive features.
+
+## Future Roadmap 🗺️
+
+Exciting features planned for future releases:
+
+- Integration with smart home devices
+- Advanced sentiment analysis for more nuanced interactions
+- Expanded language support for global accessibility
+- Blockchain integration for secure data management
+
 ## Contributions Welcome 🤝
 
 Contributions to Project Jarvis are encouraged! Whether adding features, fixing bugs, improving documentation, optimizing performance, or testing the application, your contributions are invaluable. Fork the repository, make changes, and submit a pull request.
+
+### Contribution Guidelines
+
+1. Fork the repository and create your branch from `main`.
+2. Ensure your code adheres to the project's coding standards.
+3. Include tests for new features or bug fixes.
+4. Update the documentation as necessary.
+5. Submit a pull request with a clear description of your changes.
 
 ## Join Our Discord Community 🎉
 
@@ -77,6 +141,14 @@ Connect with other Jarvis enthusiasts, contributors, and developers on our Disco
 ## License 📄
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments 👏
+
+We'd like to thank all the contributors and open-source projects that have made Jarvis possible. Special thanks to:
+
+- The Python community for their excellent libraries
+- Our dedicated team of beta testers
+- All contributors who have helped shape Jarvis
 
 ---
 
@@ -90,5 +162,8 @@ Thank you for considering contributing to Project Jarvis! If you have questions,
 
 - **Implement New GUI**: Design and implement a new graphical user interface.
 - **Implement Rawdog**: Develop logic for efficient function execution.
+- **Enhance Documentation**: Create comprehensive API documentation and user guides.
+- **Optimize Performance**: Conduct performance profiling and implement optimizations.
+- **Expand Test Coverage**: Develop additional unit and integration tests.
 
 ---
