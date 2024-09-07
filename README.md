@@ -66,37 +66,6 @@ Jarvis offers a wide range of features:
 
 5. **Interact with Jarvis**: Use the GUI interface or voice commands to explore features and execute tasks.
 
-## Advanced Configuration 🛠️
-
-### Customizing Voice Commands
-
-You can extend Jarvis's voice recognition capabilities by adding new commands in the `voice_commands.py` file:
-
-```python
-VOICE_COMMANDS = {
-    "open browser": open_browser,
-    "check weather": check_weather,
-    # Add your custom commands here
-}
-```
-
-### Integrating New APIs
-
-To integrate a new API, add its configuration to `config.json`:
-
-```json
-{
-  "apis": {
-    "new_api_name": {
-      "key": "your_api_key_here",
-      "endpoint": "https://api.example.com/v1"
-    }
-  }
-}
-```
-
-Then, create a new module in the `apis` directory to handle the API interactions.
-
 ## Performance Optimization 🚀
 
 To ensure Jarvis runs smoothly on your system:
@@ -170,4 +139,4 @@ Thank you for considering contributing to Project Jarvis! If you have questions,
 
 ## Project has been outdated!
 
-Updated version of jarvis can be found [here](https://github.com/Likhithsai2580/JARVIS-MARK5)
+Updated version of Jarvis can be found [here](https://github.com/Likhithsai2580/JARVIS-MARK5)
