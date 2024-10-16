@@ -1,5 +1,3 @@
-
-
 ## Project has been outdated!
 
 Updated version of Jarvis can be found [here](https://github.com/Likhithsai2580/JARVIS-MARK5)
