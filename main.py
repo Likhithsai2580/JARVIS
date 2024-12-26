@@ -13,10 +13,10 @@ class ExternalProcess(QtCore.QObject):
         self.command = command
 
     def run(self):
-        process = QtCore.QProcess()
-        process.start(" ".join(self.command))
-        process.waitForFinished()
-        output = process.readAllStandardOutput().data().decode()
+        self.process = QtCore.QProcess()
+        self.process.start(" ".join(self.command))
+        self.process.waitForFinished()
+        output = self.process.readAllStandardOutput().data().decode()
         self.update_text.emit(output)
 
 class MainWindow(QtWidgets.QMainWindow):
