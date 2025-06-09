@@ -140,3 +140,4 @@ Thank you for considering contributing to Project Jarvis! If you have questions,
 - **Expand Test Coverage**: Develop additional unit and integration tests.
 
 <!-- GitAds-Verify: L85NE7GXCYA9TE6524GQZK2FPZ6SEFZS -->
+https://gitads.dev/v1/ad-serve?source=likhithsai2580/jarvis@github
