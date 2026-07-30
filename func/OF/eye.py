@@ -41,7 +41,7 @@ def Eye(q):
                 else:
                     execute_code_with_cache(ChatGpt(f"{error}"))
             except Exception as E:
-                print(f"Falied {E}")
+                print(f"Failed {E}")
 
 def EYE():
     resp = Listen()
