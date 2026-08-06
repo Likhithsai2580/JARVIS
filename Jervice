@@ -1,0 +1,57 @@
+import pyttsx3
+import speech_recognition as sr
+import webbrowser
+import wikipedia
+import os
+
+# Initialize JARVIS voice
+engine = pyttsx3.init()
+engine.setProperty("rate", 170)  # speaking speed
+engine.setProperty("volume", 1)
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+def take_command():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+    try:
+        print("Recognizing...")
+        command = r.recognize_google(audio, language='en-in')
+        print(f"You said: {command}")
+    except Exception as e:
+        print("Sorry, say that again...")
+        return ""
+    return command.lower()
+
+def jarvis():
+    speak("Hello, I am Jarvis. How can I help you?")
+    while True:
+        command = take_command()
+
+        if "wikipedia" in command:
+            speak("Searching Wikipedia...")
+            topic = command.replace("wikipedia", "")
+            result = wikipedia.summary(topic, sentences=2)
+            speak(result)
+
+        elif "open youtube" in command:
+            speak("Opening YouTube")
+            webbrowser.open("https://www.youtube.com")
+
+        elif "open google" in command:
+            speak("Opening Google")
+            webbrowser.open("https://www.google.com")
+
+        elif "exit" in command or "stop" in command:
+            speak("Goodbye!")
+            break
+
+        else:
+            speak("Sorry, I didn't understand.")
+
+jarvis()
